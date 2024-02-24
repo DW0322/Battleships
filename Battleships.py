@@ -132,7 +132,7 @@ def boatSelection():
         
     return print(selected_boats)
 
- #hubba hubba
+
     #placement direction horizontal left, vertically up, etc...
     #make sure the space on the board is empty
     #make sure the size fits the placement area
