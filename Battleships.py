@@ -132,6 +132,7 @@ def boatSelection():
         
     return print(selected_boats)
 
+boatSelection()
 
 #pens
     #placement direction horizontal left, vertically up, etc...
