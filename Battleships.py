@@ -123,12 +123,16 @@ def boatSelection():
             if boat_id in remaining_boats:
                 print(boat_text)
         boat = input("Pick the number boat you would like to place: ")
-        
+
         if boat in remaining_boats:
-            selected_boats.append((boats[boat][0], boats[boat][1]))
-            remaining_boats.remove(boat)
-        else:
-            print("Invalid choice. Please pick a boat from the list.")
+            def boatPlacement():
+                column_values = {"A" : 0, "B" : 1, "C" : 2, "D" : 3, "E" : 4, "F" : 5, "G" : 6, "H" : 7, "I" : 8, "J" : 9}
+                row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 60, "8" : 70, "9" : 80, "10" : 90}
+
+            #selected_boats.append((boats[boat][0], boats[boat][1]))
+            #remaining_boats.remove(boat)
+        #else:
+            #print("Invalid choice. Please pick a boat from the list.")
         
     return print(selected_boats)
 
@@ -148,3 +152,4 @@ def boatSelection():
 #battle ship attack round player 2
     #detect hit or miss
     #update attack board
+#aaaa
