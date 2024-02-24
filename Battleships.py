@@ -102,6 +102,13 @@ def printBoardP2(boardAttackP2, boardShipP2):
 #battle ship design for vertical and horizontal placement
 #battle ship placement round player 1
 
+#def boatPlacement():
+            #column_values = {"A" : 0, "B" : 1, "C" : 2, "D" : 3, "E" : 4, "F" : 5, "G" : 6, "H" : 7, "I" : 8, "J" : 9}
+            #row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 60, "8" : 70, "9" : 80, "10" : 90}
+            #for boat_id, boat_text in boats:
+                #if boat == boat_id:
+                    #return boat_id, boat_text[1]
+    
 def boatSelection():
     
     boats = {
@@ -126,13 +133,6 @@ def boatSelection():
 
         if boat in remaining_boats:
             size = boats[boat][1]
-        #def boatPlacement():
-            #column_values = {"A" : 0, "B" : 1, "C" : 2, "D" : 3, "E" : 4, "F" : 5, "G" : 6, "H" : 7, "I" : 8, "J" : 9}
-            #row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 60, "8" : 70, "9" : 80, "10" : 90}
-            #for boat_id, boat_text in boats:
-                #if boat == boat_id:
-                    #return boat_id, boat_text[1]
-
             selected_boats.append((boats[boat][0], boats[boat][1]))
             remaining_boats.remove(boat)
         else:
