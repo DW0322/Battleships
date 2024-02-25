@@ -79,7 +79,7 @@ def boatPlacement():
         "5" : ("Z", 2, "Destroyer")
     }
     column_values = {"A" : 0, "B" : 1, "C" : 2, "D" : 3, "E" : 4, "F" : 5, "G" : 6, "H" : 7, "I" : 8, "J" : 9}
-    row_values = {"a" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 60, "8" : 70, "9" : 80, "10" : 90}
+    row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 60, "8" : 70, "9" : 80, "10" : 90}
 
     boatsText = {key: f"{key}- {value[2]} - {value[1]} Spaces" for key, value in boats.items()}
     remaining_boats = set(boats.keys())
@@ -101,10 +101,13 @@ def boatPlacement():
             print("Invalid choice. Please pick a boat from the list.")
             continue
         
+        placement = []
+
         column = set(column_values.keys())
-        
+
         while True:
             placement_column = (input(f"What column (A - J) would you like to place your {boats[boat][2]} of size {size}? ")).upper()
+            placement.append(placement_column)
             if placement_column in column:
                 break
             else:
@@ -114,12 +117,19 @@ def boatPlacement():
 
         while True:
             placement_row = (input(f"What row (1 - 10) would you like to place your {boats[boat][2]} of size {size}? ")).upper()
+            placement.append(placement_row)
             if placement_row in row:
                 break
             else:
                 print("Invalid row. Please enter a row from 1 to 10.")
-        
-        available_directions = {"W" : "up", "A" : "left", "S" : "down", "D" : "right"}
+        column_selected = column_values[placement[0]]
+        row_selected = row_values[placement[1]]
+        cell_selected = column_selected + row_selected
+
+        #def boardShipPlacement(player_number, ship_board, selected_cell):
+            #if cell_selected == "-" and column
+
+        available_directions = ["W", "A", "S", "D"]
 
         while True:
             direction = (input("Using the WASD keys, select your desired direction: ")).upper()
