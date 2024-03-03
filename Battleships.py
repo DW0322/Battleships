@@ -1,3 +1,8 @@
+import os
+
+def clear_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 #P1 battleship boards
 boardShipP1 = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", 
                "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", 
@@ -135,11 +140,7 @@ row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 6
 def boatPlacement():
     global currentPlayer
     boats = {
-        "1" : ("V", 5, "Carrier"),
-        "2" : ("W", 4, "Battleship"),
-        "3" : ("X", 3, "Cruiser"),
-        "4" : ("Y", 3, "Submarine"),
-        "5" : ("Z", 2, "Destroyer")
+        "1" : ("V", 5, "Carrier")
     }
 
     boatsText = {key: f"{key}- {value[2]} - {value[1]} Spaces" for key, value in boats.items()}
@@ -266,12 +267,12 @@ def shotCheck(currentAttackBoard, enemyShipBoard):
 
         if currentAttackBoard[cell_selected] == "-":
             if enemyShipBoard[cell_selected] == "-":
-                print("You missed!")
+                clear_terminal()
+                print("You missed! Next players turn.")
                 currentAttackBoard[cell_selected] = "O"  # Update attack board with miss symbol
-                printCurrentPlayerBoard(currentPlayer)
                 break
             else:
-                print("It's a hit!")
+                print("It's a hit! Your turn again.")
                 currentAttackBoard[cell_selected] = "#"  # Update attack board with hit symbol
                 enemyShipBoard[cell_selected] = "#"  # Update enemy ship board with hit symbol
                 printCurrentPlayerBoard(currentPlayer)
@@ -301,6 +302,8 @@ def placementRound():
         boatPlacement()
         currentPlayer = "P2" if currentPlayer == "P1" else "P1"
         loop += 1
+        clear_terminal()
+    clear_terminal()
 
 #functions to make the attack round
 def attackRound():
@@ -309,6 +312,7 @@ def attackRound():
     while gameRunning is True:
         shotPlacement()
         detectWinner()
+    
 
 #general function using the two rounds, placement and attack.
 def battleshipGame():
