@@ -61,9 +61,9 @@ def switch_player_attack(currentPlayer, boardShipP1, boardAttackP1, boardShipP2,
 def playerTurnChange(player):
     global currentPlayer
     if player == "P1":
-        player = "P2"
+        currentPlayer = "P2"
     else:
-        player = "P1"
+        currentPlayer = "P1"
 
 
 #function to print the esablished layout in a more user friendly way. Also declaring the rows and columns.
@@ -138,11 +138,7 @@ row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 6
 def boatPlacement():
     global currentPlayer
     boats = {
-        "1" : ("V", 5, "Carrier"),
-        "2" : ("W", 4, "Battleship"),
-        "3" : ("X", 3, "Cruiser"),
-        "4" : ("Y", 3, "Submarine"),
-        "5" : ("Z", 2, "Destroyer")
+        "1" : ("V", 5, "Carrier")
     }
 
     boatsText = {key: f"{key}- {value[2]} - {value[1]} Spaces" for key, value in boats.items()}
@@ -212,14 +208,27 @@ def boatPlacement():
             else:
                 print("Invalid direction. Please enter a direction using WASD keys.")
 
+def detectWinner():
+    global winner
+    global gameRunning
+    global currentPlayer
+    if gameRunning == False:
+        if currentPlayer == "P2":
+            winner = "P1"   
+        else:
+            winner = "P2"
+        print(f"The winner is... {winner}!!")
+
 
 def shotCheck(currentAttackBoard, enemyShipBoard):
     global currentPlayer
-    placement = []
+    global gameRunning
     column = set(column_values.keys())
     row = set(row_values.keys())
+    hit = 0
 
-    while True:
+    while gameRunning is True:
+        placement = []  # Initialize placement list within the loop
         placement_column = input("What column (A - J) would you like to place your shot? ").upper()
         if placement_column in column:
             placement.append(placement_column)
@@ -242,14 +251,21 @@ def shotCheck(currentAttackBoard, enemyShipBoard):
             if enemyShipBoard[cell_selected] == "-":
                 print("You missed!")
                 currentAttackBoard[cell_selected] = "O"  # Update attack board with miss symbol
+                break
             else:
                 print("It's a hit!")
-                currentAttackBoard[cell_selected] = "X"  # Update attack board with hit symbol
-                enemyShipBoard[cell_selected] = "X"  # Update enemy ship board with hit symbol
-            break
+                currentAttackBoard[cell_selected] = "#"  # Update attack board with hit symbol
+                enemyShipBoard[cell_selected] = "#"  # Update enemy ship board with hit symbol
+                printCurrentPlayerBoard(currentPlayer)
+                hit += 1
+                if hit == 5:
+                    gameRunning = False
+                    break
+                continue
         else:
             print("You already shot here! Please select another cell.")
             continue
+    
 
 #battle ship attack round player
     #shot decision
@@ -259,37 +275,14 @@ def shotPlacement():
         shotCheck(boardAttackP1, boardShipP2) 
     else:
         shotCheck(boardAttackP2, boardShipP1)
-
-
-                
-
-def detectWinner():
-    global winner
-    global gameRunning
-    global currentPlayer
-    ship_board, attack_board = switch_player(currentPlayer, boardShipP1, boardAttackP1, boardShipP2, boardAttackP2)
-    hits = 0
-    for cell in attack_board:
-        if cell == "#":
-            hits += 1
-            if hits == 17:
-                gameRunning = False
-                if currentPlayer == "P1":
-                    winner = "P1"
-                else:
-                    winner = "P2"
-            else:
-                break
-    currentPlayer = "P2" if currentPlayer == "P1" else "P1"
-    return gameRunning
-
+    playerTurnChange(currentPlayer)
 
 
 def placementRound():
     global currentPlayer
     loop = 0
     while loop != 2:
-        boardShip, boardAttack = switch_player(currentPlayer, boardShipP1, boardAttackP1, boardShipP2, boardAttackP2)
+        switch_player(currentPlayer, boardShipP1, boardAttackP1, boardShipP2, boardAttackP2)
         printCurrentPlayerBoard(currentPlayer)
         boatPlacement()
         currentPlayer = "P2" if currentPlayer == "P1" else "P1"
@@ -299,11 +292,11 @@ def placementRound():
 
 def attackRound():
     global currentPlayer
-    while gameRunning:
+    global gameRunning
+    while gameRunning is True:
         shotPlacement()
         printCurrentPlayerBoard(currentPlayer)
         detectWinner()
-        currentPlayer = "P2" if currentPlayer == "P1" else "P1"
 
 def battleshipGame():
     placementRound()
