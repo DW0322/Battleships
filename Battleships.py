@@ -60,7 +60,7 @@ def printCurrentPlayerBoard(currentPlayer):
         print_board(boardAttackP2, boardShipP2)
 
 
-#Fucniton checks if you've already selected that boat and if the are you are selecting has enough space for the ship.
+#Funciton checks if you've already selected that boat and if the are you are selecting has enough space for the ship.
 def boardShipPlacement(size, ship_board, cell_selected, boat_symbol, direction):
     directions = {
         "W": (-1, 0),  # Up
@@ -106,7 +106,11 @@ row_values = {"1" : 0, "2" : 10, "3" : 20, "4" : 30, "5" : 40, "6" : 50, "7" : 6
 def boatPlacement():
     global currentPlayer
     boats = {
-        "1" : ("V", 5, "Carrier")
+        "1" : ("V", 5, "Battleship"),
+        "2" : ("W", 4, "Aircraft Carrier"),
+        "3" : ("X", 3, "Submarine"),
+        "4" : ("Y", 3, "Destroyer"),
+        "5" : ("Z", 2, "Small Ship")
     }
 
     boatsText = {key: f"{key}- {value[2]} - {value[1]} Spaces" for key, value in boats.items()}
